@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h3>Edit Book</h3>
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input class="form-control" name="title" required value="{{ book.title }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Author</label>
+      <input class="form-control" name="author" required value="{{ book.author }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">ISBN</label>
+      <input class="form-control" name="isbn" value="{{ book.isbn }}">
+    </div>
+
+    {% if book.quantity is not None %}
+    <div class="mb-3">
+      <label class="form-label">Quantity</label>
+      <input class="form-control" name="quantity" type="number" min="0" value="{{ book.quantity }}">
+    </div>
+    {% endif %}
+
+    {% if book.available is not None %}
+    <div class="mb-3 form-check">
+      <input class="form-check-input" name="available" type="checkbox" id="available" {% if book.available %}checked{% endif %}>
+      <label class="form-check-label" for="available">Available</label>
+    </div>
+    {% endif %}
+
+    <button class="btn btn-primary" type="submit">Save Changes</button>
+    <a class="btn btn-secondary" href="{% url 'view_books' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

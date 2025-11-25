@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h3>Issued Books</h3>
+
+  <table class="table">
+    <thead>
+      <tr><th>Book</th><th>Member</th><th>Issue Date</th><th>Return Date</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      {% for i in issued %}
+      <tr>
+        <td>{{ i.book.title }}</td>
+        <td>{{ i.member.name }}</td>
+        <td>{{ i.issue_date }}</td>
+        <td>
+          {% if i.return_date %}
+            {{ i.return_date }}
+          {% else %}
+            <span class="text-danger">Not returned</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if not i.return_date %}
+            <a class="btn btn-sm btn-success" href="{% url 'return_book' i.id %}">Return</a>
+          {% else %}
+            <span class="text-muted">—</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No issued records.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

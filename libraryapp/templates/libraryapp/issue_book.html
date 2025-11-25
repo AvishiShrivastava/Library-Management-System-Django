@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h3>Issue Book</h3>
+
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Member</label>
+      <select name="member" class="form-select" required>
+        <option value="">-- Select Member --</option>
+        {% for m in members %}
+          <option value="{{ m.id }}">{{ m.name }}{% if m.email %} ({{ m.email }}){% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Book (Available)</label>
+      <select name="book" class="form-select" required>
+        <option value="">-- Select Book --</option>
+        {% for b in books %}
+          <option value="{{ b.id }}">{{ b.title }} — {{ b.author }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Issue Book</button>
+  </form>
+</div>
+{% endblock %}

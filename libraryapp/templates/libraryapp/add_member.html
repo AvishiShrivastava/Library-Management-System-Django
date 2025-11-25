@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h3>Add Member</h3>
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input class="form-control" name="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input class="form-control" name="email" type="email">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Phone</label>
+      <input class="form-control" name="phone">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Add Member</button>
+  </form>
+</div>
+{% endblock %}

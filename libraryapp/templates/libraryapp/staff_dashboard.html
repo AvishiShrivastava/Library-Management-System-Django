@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-3">
+  <h3>Staff Dashboard</h3>
+  <p>Total books: {{ stats.total_books }} — Members: {{ stats.total_members }} — Issued: {{ stats.issued_count }}</p>
+
+  <h5 class="mt-4">Recent issued</h5>
+  <table class="table">
+    <thead><tr><th>Book</th><th>Member</th><th>Issue Date</th><th>Return</th></tr></thead>
+    <tbody>
+      {% for i in issued %}
+      <tr>
+        <td>{{ i.book.title }}</td>
+        <td>{{ i.member.name }}</td>
+        <td>{{ i.issue_date }}</td>
+        <td>{% if i.return_date %}{{ i.return_date }}{% else %}—{% endif %}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No issued records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

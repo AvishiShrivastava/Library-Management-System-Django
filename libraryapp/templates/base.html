@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Online Library Management</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- 🔵 AUTHENTICATION NAVBAR (Your Login/Logout/Staff Navbar) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">Library</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="nav">
+
+        <!-- Left Side Menu -->
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'view_books' %}">Books</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'view_members' %}">Members</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'view_issued' %}">Issued</a></li>
+        </ul>
+
+        <!-- Right Side Menu -->
+        <ul class="navbar-nav ms-auto">
+
+          {% if user.is_authenticated %}
+
+    {% if user.is_staff %}
+      <!-- SHOW ADD BOOK / ADD MEMBER / ISSUE BOOK FOR STAFF -->
+      <li class="nav-item"><a class="nav-link text-light" href="{% url 'add_book' %}">Add Book</a></li>
+      <li class="nav-item"><a class="nav-link text-light" href="{% url 'add_member' %}">Add Member</a></li>
+      <li class="nav-item"><a class="nav-link text-light" href="{% url 'issue_book' %}">Issue Book</a></li>
+    {% endif %}
+
+    <li class="nav-item">
+      <span class="nav-link text-light">Hello, {{ user.username }}</span>
+    </li>
+
+    {% if user.is_staff %}
+      <li class="nav-item">
+        <a class="nav-link text-light" href="{% url 'staff_dashboard' %}">Staff</a>
+      </li>
+    {% endif %}
+
+    <li class="nav-item">
+      <a class="nav-link text-light" href="{% url 'logout' %}">Logout</a>
+    </li>
+
+  {% else %}
+    <li class="nav-item">
+      <a class="nav-link text-light" href="{% url 'login' %}">Login</a>
+    </li>
+  {% endif %}
+
+</ul>
+
+      </div>
+    </div>
+  </nav>
+  <!-- 🔵 END AUTH NAVBAR -->
+
+
+  <!-- PAGE CONTENT -->
+  <div class="container">
+
+    <!-- Messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
